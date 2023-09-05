@@ -541,20 +541,23 @@ static BOOL msgRoamingServiceAvailable = YES;
 }
 
 - (BOOL)p_showTime:(NSArray *)messageArray index:(int)index{
-    BOOL showTime = NO;
-    if (index == messageArray.count - 1) {
-        showTime = YES;
-    } else {
-        NSInteger previousIndex = index + 1;
-        RCMessageModel *premodel = messageArray[previousIndex];
-        RCMessage *rcMsg = messageArray[index];
-
-        long long previous_time = premodel.sentTime;
-        long long current_time = rcMsg.sentTime;
-        long long interval = llabs(current_time - previous_time);
-        showTime = interval / 1000 > 3 * 60;
-    }
-    return showTime;
+    return NO;
+    
+    #pragma mark -- 以下是源代码
+//    BOOL showTime = NO;
+//    if (index == messageArray.count - 1) {
+//        showTime = YES;
+//    } else {
+//        NSInteger previousIndex = index + 1;
+//        RCMessageModel *premodel = messageArray[previousIndex];
+//        RCMessage *rcMsg = messageArray[index];
+//
+//        long long previous_time = premodel.sentTime;
+//        long long current_time = rcMsg.sentTime;
+//        long long interval = llabs(current_time - previous_time);
+//        showTime = interval / 1000 > 3 * 60;
+//    }
+//    return showTime;
 }
 
 #pragma mark - loadMessageV1
