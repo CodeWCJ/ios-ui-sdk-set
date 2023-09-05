@@ -96,36 +96,38 @@
 - (void)figureOutAllConversationDataRepository {
     for (int i = 0; i < self.chatVC.conversationDataRepository.count; i++) {
         RCMessageModel *model = [self.chatVC.conversationDataRepository objectAtIndex:i];
-        if (0 == i) {
-            model.isDisplayMessageTime = YES;
-        } else if (i > 0) {
-            RCMessageModel *pre_model = [self.chatVC.conversationDataRepository objectAtIndex:i - 1];
-
-            long long previous_time = pre_model.sentTime;
-
-            long long current_time = model.sentTime;
-
-            long long interval =
-                current_time - previous_time > 0 ? current_time - previous_time : previous_time - current_time;
-            if (interval / 1000 <= 3 * 60) {
-                if (model.isDisplayMessageTime && model.cellSize.height > 0) {
-                    CGSize size = model.cellSize;
-                    size.height = model.cellSize.height - 45;
-                    model.cellSize = size;
-                }
-                model.isDisplayMessageTime = NO;
-            } else if (![model.content isKindOfClass:[RCOldMessageNotificationMessage class]]) {
-                if (!model.isDisplayMessageTime && model.cellSize.height > 0) {
-                    CGSize size = model.cellSize;
-                    size.height = model.cellSize.height + 45;
-                    model.cellSize = size;
-                }
-                model.isDisplayMessageTime = YES;
-            }
-        }
-        if ([model.content isKindOfClass:[RCOldMessageNotificationMessage class]]) {
-            model.isDisplayMessageTime = NO;
-        }
+        model.isDisplayMessageTime = NO;
+        // MARK: 下面是以前的代码
+//        if (0 == i) {
+//            model.isDisplayMessageTime = YES;
+//        } else if (i > 0) {
+//            RCMessageModel *pre_model = [self.chatVC.conversationDataRepository objectAtIndex:i - 1];
+//
+//            long long previous_time = pre_model.sentTime;
+//
+//            long long current_time = model.sentTime;
+//
+//            long long interval =
+//                current_time - previous_time > 0 ? current_time - previous_time : previous_time - current_time;
+//            if (interval / 1000 <= 3 * 60) {
+//                if (model.isDisplayMessageTime && model.cellSize.height > 0) {
+//                    CGSize size = model.cellSize;
+//                    size.height = model.cellSize.height - 45;
+//                    model.cellSize = size;
+//                }
+//                model.isDisplayMessageTime = NO;
+//            } else if (![model.content isKindOfClass:[RCOldMessageNotificationMessage class]]) {
+//                if (!model.isDisplayMessageTime && model.cellSize.height > 0) {
+//                    CGSize size = model.cellSize;
+//                    size.height = model.cellSize.height + 45;
+//                    model.cellSize = size;
+//                }
+//                model.isDisplayMessageTime = YES;
+//            }
+//        }
+//        if ([model.content isKindOfClass:[RCOldMessageNotificationMessage class]]) {
+//            model.isDisplayMessageTime = NO;
+//        }
     }
 }
 
