@@ -127,6 +127,7 @@ static BOOL msgRoamingServiceAvailable = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
             @autoreleasepool {
                 RCMessageModel *model = [RCMessageModel modelWithMessage:rcMessage];
+                model.isDisplayMessageTime = NO;
                 [chatVC.util figureOutLatestModel:model];
                 if ([ws appendMessageModel:model]) {
                     [self.cachedReloadMessages addObject:model];
@@ -857,6 +858,7 @@ static BOOL msgRoamingServiceAvailable = YES;
 - (void)didReceiveMessageNotification:(RCMessage *)message leftDic:(NSDictionary *)leftDic {
     __block RCMessage *rcMessage = message;
     RCMessageModel *model = [RCMessageModel modelWithMessage:rcMessage];
+    model.isDisplayNickname = false;
     if ([self p_enableCurrentConversation:message]) {
         [self.chatVC.csUtil startNotReciveMessageAlertTimer];
         [self p_setMessageReadStats:rcMessage.messageId];
