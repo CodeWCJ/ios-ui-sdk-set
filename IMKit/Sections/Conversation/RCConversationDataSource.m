@@ -127,8 +127,9 @@ static BOOL msgRoamingServiceAvailable = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
             @autoreleasepool {
                 RCMessageModel *model = [RCMessageModel modelWithMessage:rcMessage];
-                model.isDisplayMessageTime = NO;
+                
                 [chatVC.util figureOutLatestModel:model];
+                model.isDisplayMessageTime = NO;
                 if ([ws appendMessageModel:model]) {
                     [self.cachedReloadMessages addObject:model];
                     ws.throttleReloadAction();
