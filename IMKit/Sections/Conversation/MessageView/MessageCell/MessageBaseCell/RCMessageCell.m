@@ -546,13 +546,13 @@ NSString *const KNotificationMessageBaseCellUpdateCanReceiptStatus =
     if (self.model.conversationType == conversationType && [self.model.targetId isEqualToString:targetId]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (messageId == self.model.messageId) {
-                self.receiptView.hidden = NO;
+                self.receiptView.hidden = YES;
                 self.receiptView.userInteractionEnabled = YES;
                 self.receiptStatusLabel.hidden = YES;
-                self.model.isCanSendReadReceipt = YES;
+                self.model.isCanSendReadReceipt = NO;
             } else {
                 self.receiptView.hidden = YES;
-                self.receiptStatusLabel.hidden = NO;
+                self.receiptStatusLabel.hidden = YES;
                 self.model.isCanSendReadReceipt = NO;
             }
         });
