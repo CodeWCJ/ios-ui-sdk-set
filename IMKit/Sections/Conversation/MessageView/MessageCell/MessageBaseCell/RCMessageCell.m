@@ -171,12 +171,12 @@ NSString *const KNotificationMessageBaseCellUpdateCanReceiptStatus =
         }
     }
     if (model.isCanSendReadReceipt) {
-        self.receiptView.hidden = NO;
+        self.receiptView.hidden = YES;
         self.receiptView.userInteractionEnabled = YES;
         self.receiptStatusLabel.hidden = YES;
     } else {
         self.receiptView.hidden = YES;
-        self.receiptStatusLabel.hidden = NO;
+        self.receiptStatusLabel.hidden = YES;
     }
 }
 
@@ -190,7 +190,7 @@ NSString *const KNotificationMessageBaseCellUpdateCanReceiptStatus =
     if (model.messageUId.length > 0) {
         self.receiptStatusLabel.hidden = YES;
         self.receiptStatusLabel.userInteractionEnabled = NO;
-        self.receiptView.hidden = NO;
+        self.receiptView.hidden = YES;
     }
     self.messageFailedStatusView.hidden = YES;
     if (self.messageActivityIndicatorView) {
