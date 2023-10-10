@@ -911,6 +911,7 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
     /// 请在停止滚动时、滚动动画执行完时更新右下角未读数气泡 或者在collectionview未处于底部时更新
     /// 又或者在撤回未读消息时更新，不要在其他时机更新，或者进行不必要的更新，浪费资源。
     [self updateUnreadMsgCountLabel];
+    [self scrollDidEnd];
 }
 
 /// 停止滚动时调用
@@ -918,6 +919,7 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
     [self.dataSource scrollDidEnd];
     [self updateUnreadMsgCountLabel];
     self.isTouchScrolled = NO;
+    [self scrollDidEnd];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
@@ -925,6 +927,7 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
         self.isTouchScrolled = NO;
     }
     [self.dataSource scrollDidEnd];
+    [self scrollDidEnd];
 }
 
 //点击状态栏屏蔽系统动作手动滚动到顶部并加载历史消息

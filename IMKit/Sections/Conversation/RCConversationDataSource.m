@@ -728,6 +728,7 @@ static BOOL msgRoamingServiceAvailable = YES;
     [self.chatVC.util figureOutAllConversationDataRepository];
     [self.chatVC.conversationMessageCollectionView reloadData];
     [self handleAfterLoadLastestMessage];
+    [self.chatVC handleLatestMessageLoadCompleted];
 }
 
 - (void)loadMoreNewerMessageV2:(NSArray *)messages{
