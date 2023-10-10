@@ -75,4 +75,8 @@
 - (void)didReceiveMessageNotification:(RCMessage *)rcMessage leftDic:(NSDictionary *)leftDic;
 
 - (BOOL)isAtTheBottomOfTableView;
+
+#pragma mark -- custom method
+/// 滚动到对应的消除处
+- (void)scrollToSuitablePositionWithMessage:(RCMessage *)message;
 @end

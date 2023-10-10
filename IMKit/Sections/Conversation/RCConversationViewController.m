@@ -532,6 +532,10 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
     [self.dataSource tapRightTopUnReadMentionedButton:sender];
 }
 
+- (void)scrollToOrderMessage:(RCMessage *)orderMessage {
+    [self.dataSource scrollToSuitablePositionWithMessage:orderMessage];
+}
+
 - (void)loadRemainMessageAndScrollToBottom:(BOOL)animated {
     self.locatedMessageSentTime = 0;
     self.conversationDataRepository = [[NSMutableArray alloc] init];
@@ -3333,6 +3337,10 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
 
 - (void)willDisplayMessageCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 }
+
+- (void)handleLatestMessageLoadCompleted {}
+
+- (void)scrollDidEnd {}
 
 //历史遗留接口
 - (void)willDisplayConversationTableCell:(RCMessageBaseCell *)cell atIndexPath:(NSIndexPath *)indexPath {

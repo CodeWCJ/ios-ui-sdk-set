@@ -586,4 +586,14 @@ typedef enum : NSUInteger {
 /// 开发者如果想更换转发消息的选择会话界面，可以重写此方法，弹出自定义的选择会话界面，选择结束之后，调用completedBlock传入选中的会话即可。
 - (void)forwardMessage:(NSInteger)index completed:(void (^)(NSArray<RCConversation *> *conversationList))completedBlock;
 
+#pragma mark -- custom method
+/// 滚动到订单消息 思路参考滚动到第一条未读消息，获取第一条未读消息，根据这条消息的发送时间，获取其他的历史消息
+/// - Parameter orderMessage: 订单消息
+- (void)scrollToOrderMessage:(RCMessage *)orderMessage;
+
+/// 进入界面拉取到最新消息，在reloadData之后进行调用，供子类进行调用
+- (void)handleLatestMessageLoadCompleted;
+
+/// 滚动结束
+- (void)scrollDidEnd;
 @end

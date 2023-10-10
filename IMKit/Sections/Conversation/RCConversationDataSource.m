@@ -1231,6 +1231,59 @@ static BOOL msgRoamingServiceAvailable = YES;
     }];
 }
 
+- (void)scrollToSuitablePositionWithMessage:(RCMessage *)message {
+    long long localTime = message.sentTime;
+    __weak typeof(self) weakSelf = self;
+    /// 这里的逻辑是降序拉后面时间的历史消息
+    [self getHistoryMessageV2:localTime+1 order:RCHistoryMessageOrderDesc loadType:self.chatVC.loadMessageType complete:^(NSArray *oldMsgs, RCConversationLoadMessageType type) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+
+        long long time = localTime-1;
+        if (oldMsgs.count > 0) {
+            RCMessage *msg = oldMsgs.firstObject;
+            time = msg.sentTime;
+        }
+        __weak typeof(strongSelf) weakSelf2 = strongSelf;
+        /// 在升序拉前面的历史消息
+        [strongSelf getHistoryMessageV2:time order:RCHistoryMessageOrderAsc loadType:type complete:^(NSArray *newMsgs, RCConversationLoadMessageType type) {
+            __strong typeof(weakSelf2) strongSelf2 = weakSelf2;
+
+            NSMutableArray *msgArr = [NSMutableArray array];
+            if (oldMsgs != nil) {
+                msgArr = [[oldMsgs reverseObjectEnumerator] allObjects].mutableCopy;
+            }
+            [msgArr addObjectsFromArray:newMsgs];
+            
+            if (strongSelf2.firstUnreadMessage) {
+                for (int i = 0; i < msgArr.count; i ++) {
+                    RCMessage *message = msgArr[i];
+                    if(message.messageId == strongSelf2.firstUnreadMessage.messageId){
+                        RCMessage *oldMsg = [strongSelf2 generateOldMessage];
+                        if(oldMsg) {
+                            [msgArr insertObject:oldMsg atIndex:i];
+                        }
+                        break;
+                    }
+                }
+            }
+            //移除所有的已经加载的消息
+            [strongSelf2.chatVC.conversationDataRepository removeAllObjects];
+            [strongSelf2.chatVC.conversationMessageCollectionView reloadData];
+            /*
+             bugID=50466:
+             reloadData 之后 collectionView 还没有完成渲染, 此时直接访问 collectionView 的 UI 内容会有问题, 需要先标记视图
+             为脏数据, 再启用渲染, 之后的 UI 访问才能正常
+             */
+            [strongSelf2.chatVC.conversationMessageCollectionView setNeedsLayout];
+            [strongSelf2.chatVC.conversationMessageCollectionView layoutIfNeeded];
+
+            [strongSelf2 loadMoreNewerMessageV2:msgArr];
+            [strongSelf2 scrollToSpecifiedPosition:YES baseMeassage:message];
+    
+        }];
+    }];
+}
+
 - (void)hideUnreadButtonAfterLoadMetionedMessageWith:(RCMessageModel *)message {
 // bugfix: 50540
     if (!self.hideUnreadBtnForMentioned) {
