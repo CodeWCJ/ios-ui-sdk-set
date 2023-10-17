@@ -13,6 +13,7 @@
 #import "RCMessageCellTool.h"
 #import "RCKitConfig.h"
 #import "RCResendManager.h"
+#import "RCloudImageLoader.h"
 @interface RCImageMessageCell ()
 @property (nonatomic, strong) RCBaseImageView *destructPicture;
 @property (nonatomic, strong) UILabel *destructLabel;
@@ -113,10 +114,21 @@
     if (imageMessage.thumbnailImage) {
         return imageMessage.thumbnailImage;
     }
-    if (model.messageDirection == MessageDirection_SEND) {
-        return RCResourceImage(@"to_thumb_image_broken");
-    } else {
-        return RCResourceImage(@"from_thumb_image_broken");
+    if (imageMessage.originalImage) {
+        return imageMessage.originalImage;
+    }
+
+    UIImage *originalImage = [[RCloudImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:imageMessage.imageUrl] shouldLoadWithObserver:nil];
+   
+    imageMessage.originalImage = originalImage;
+    if (originalImage != nil) {
+        return  originalImage;
+    }else {
+        if (model.messageDirection == MessageDirection_SEND) {
+            return RCResourceImage(@"to_thumb_image_broken");
+        } else {
+            return RCResourceImage(@"from_thumb_image_broken");
+        }
     }
 }
 
