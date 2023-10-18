@@ -2071,7 +2071,7 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
         if(!self.displayConversationTypeArray) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 __strong typeof(__weakself) strongSelf = __weakself;
-                strongSelf.navigationItem.leftBarButtonItems = strongSelf.leftBarButtonItems;
+//                strongSelf.navigationItem.leftBarButtonItems = strongSelf.leftBarButtonItems;
                 strongSelf.leftBarButtonItems = nil;
                 if (strongSelf.conversationType != ConversationType_Encrypted && strongSelf.rightBarButtonItems) {
                     strongSelf.navigationItem.rightBarButtonItems = strongSelf.rightBarButtonItems;
