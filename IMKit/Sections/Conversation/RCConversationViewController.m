@@ -478,7 +478,7 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
                                                                                  action:@selector(rightBarButtonItemClicked:)];
     }
     
-    self.navigationItem.leftBarButtonItems = [self getLeftBackButton];
+    //self.navigationItem.leftBarButtonItems = [self getLeftBackButton];
 }
 
 - (void)updateUnreadMsgCountLabel {
@@ -2081,7 +2081,7 @@ static NSString *const rcUnknownMessageCellIndentifier = @"rcUnknownMessageCellI
             return;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.navigationItem setLeftBarButtonItems:[self getLeftBackButton]];
+            //[self.navigationItem setLeftBarButtonItems:[self getLeftBackButton]];
             self.leftBarButtonItems = nil;
             if (self.rightBarButtonItems) {
                 self.navigationItem.rightBarButtonItems = self.rightBarButtonItems;
